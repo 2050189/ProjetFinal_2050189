@@ -62,3 +62,5 @@ C:\Users\2050189\Desktop\ProjetFinal_2050189\ProjetFinal_2050189\obj\Debug\net6.
 C:\Users\2050189\Desktop\ProjetFinal_2050189\ProjetFinal_2050189\obj\Debug\net6.0\ProjetFinal_2050189.pdb
 C:\Users\2050189\Desktop\ProjetFinal_2050189\ProjetFinal_2050189\obj\Debug\net6.0\ProjetFinal_2050189.genruntimeconfig.cache
 C:\Users\2050189\Desktop\ProjetFinal_2050189\ProjetFinal_2050189\obj\Debug\net6.0\ref\ProjetFinal_2050189.dll
+C:\Users\2050189\Desktop\ProjetFinal_2050189\ProjetFinal_2050189\obj\Debug\net6.0\ProjetFinal_2050189.RazorAssemblyInfo.cache
+C:\Users\2050189\Desktop\ProjetFinal_2050189\ProjetFinal_2050189\obj\Debug\net6.0\ProjetFinal_2050189.RazorAssemblyInfo.cs

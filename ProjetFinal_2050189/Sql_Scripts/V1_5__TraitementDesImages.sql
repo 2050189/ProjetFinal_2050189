@@ -1,0 +1,11 @@
+ALTER TABLE SOLDEJANEIRO.Gamme ADD
+Identifiant uniqueidentifier NOT NULL ROWGUIDCOL DEFAULT newid();
+GO
+
+ALTER TABLE SOLDEJANEIRO.Gamme ADD CONSTRAINT
+UC_Gamme_Identifiant UNIQUE (Identifiant)
+GO
+
+ALTER TABLE SOLDEJANEIRO.Gamme ADD
+Photo varbinary(max) FILESTREAM NULL;
+GO

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProjetFinal_2050189.Data;
 using ProjetFinal_2050189.Models;
+using ProjetFinal_2050189.ViewModels;
 
 namespace ProjetFinal_2050189.Controllers
 {
@@ -17,6 +19,29 @@ namespace ProjetFinal_2050189.Controllers
         public ProduitsController(ProjetFinal2050189Context context)
         {
             _context = context;
+        }
+
+        public async Task<IActionResult> ProduitsVendusEtNombreVendusMagasin(int magasinID)
+        {
+            Magasin? magasin = await _context.Magasins.FindAsync(magasinID);
+
+            if(magasin == null)
+            {
+                return NotFound("MAGASIN INTROUVABLE");
+            }
+
+            string query = "EXEC VENTE.usp_ProduitsVendusEtNombreVendusMagasin @MagasinID";
+
+            List<SqlParameter> param = new List<SqlParameter>()
+            {
+                new SqlParameter{ParameterName = "@MagasinID", Value = magasin.MagasinId }
+            };
+
+            return View("ProduitsVendusEtNombreVendusMagasin", new MagasinInfoVM()
+            {
+                Magasin = magasin,
+                ProduitVenduParMagasin = (IEnumerable<Produit>)await _context.Magasins.FromSqlRaw(query, param.ToArray()).ToListAsync()
+            });
         }
 
         public async Task<IActionResult> VueTypeProduit()

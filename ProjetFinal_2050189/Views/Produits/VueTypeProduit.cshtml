@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ProjetFinal_2050189.Models.VwTypeDesProduit>
+
+@{
+    ViewData["Title"] = "VueTypeProduit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>VueTypeProduit</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeDeProduit)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeDeProduit)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

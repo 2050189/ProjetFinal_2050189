@@ -19,6 +19,8 @@ namespace ProjetFinal_2050189.Data
 
         public virtual DbSet<Achat> Achats { get; set; } = null!;
         public virtual DbSet<Changelog> Changelogs { get; set; } = null!;
+        public virtual DbSet<Client> Clients { get; set; } = null!;
+        public virtual DbSet<ClientDechiffre> ClientDechiffres { get; set; } = null!;
         public virtual DbSet<Detail> Details { get; set; } = null!;
         public virtual DbSet<Gamme> Gammes { get; set; } = null!;
         public virtual DbSet<Hydratant> Hydratants { get; set; } = null!;

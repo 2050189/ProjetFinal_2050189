@@ -1,4 +1,4 @@
-﻿@model ProjetFinal_2050189.Models.Client
+﻿@model ProjetFinal_2050189.ViewModels.ClientVM
 
 @{
     ViewData["Title"] = "Details";
@@ -12,20 +12,19 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Prenom)
+            @Html.DisplayNameFor(model => model.Client.Prenom)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Prenom)
+            @Html.DisplayFor(model => model.Client.Prenom)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumeroTel) Déchiffré
+            @Html.DisplayNameFor(model => model.Dechiffre.NumeroTel) Déchiffré
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumeroTel)
+            @Html.DisplayFor(model => model.Dechiffre.NumeroTel)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ClientId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

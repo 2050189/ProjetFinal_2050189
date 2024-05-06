@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProjetFinal_2050189.Data;
 using ProjetFinal_2050189.Models;
+using ProjetFinal_2050189.ViewModels;
 
 namespace ProjetFinal_2050189.Controllers
 {
@@ -19,24 +21,6 @@ namespace ProjetFinal_2050189.Controllers
         public ClientsController(ProjetFinal2050189Context context)
         {
             _context = context;
-        }
-
-        public async Task Dechiffrer(int id)
-        {
-            string query = "EXEC VENTE.USP_RecupererNumClient @ClientID";
-
-            SqlParameter parametres = new SqlParameter { ParameterName = "@ClientID", Value = id };
-
-            try
-            {
-                await _context.Database.ExecuteSqlRawAsync(query, parametres);
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError("", "");
-            }
-
-            await _context.Clients.FindAsync(id);
         }
 
         // GET: Clients
@@ -54,18 +38,38 @@ namespace ProjetFinal_2050189.Controllers
             {
                 return NotFound();
             }
-            //ClientDechiffre clientdechiffre = (await _context.ClientDechiffres.FromSqlRaw("query",).ToListAsync()).FirstOrDefaultAsync();
-            var client = await _context.Clients
-                .FirstOrDefaultAsync(m => m.ClientId == id);
+
+            Client? client = await _context.Clients.FindAsync(id);
+
             if (client == null)
             {
                 return NotFound();
             }
 
+            string query = "EXEC VENTE.USP_RecupererNumClient @ClientID";
+
+            SqlParameter parametres = new SqlParameter { ParameterName = "@ClientID", Value = id };
+
+            List<ClientDechiffre> cd = await _context.ClientDechiffres.FromSqlRaw(query, parametres).ToListAsync();
+
+            if (cd == null)
+            {
+                return NotFound();
+            }
+
+            ClientVM vm = new ClientVM()
+            {
+                Client = client,
+                Dechiffre = cd[0]
+            };
+
+
+
+
 
             
 
-            return View(client);
+            return View(vm);
         }
 
         // GET: Clients/Create
@@ -79,15 +83,33 @@ namespace ProjetFinal_2050189.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClientId,Prenom,NumeroTel")] Client client)
+        public async Task<IActionResult> Create([Bind("Prenom,NumeroTel")] InsertClientVM client)
         {
-            if (ModelState.IsValid)
+            bool exists = await _context.Clients.AnyAsync(x => x.Prenom ==  client.Prenom);
+            if (exists)
             {
-                _context.Add(client);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("", "Already Exists");
+                return View(client);
             }
-            return View(client);
+
+            string query = "EXEC VENTE.USP_AjouterClient @Prenom,@NumeroTel";
+            List<SqlParameter> parameters = new List<SqlParameter>
+            {
+                new SqlParameter{ParameterName = "@Prenom", Value = client.Prenom},
+                new SqlParameter{ParameterName = "@NumeroTel", Value = client.NumeroTel}
+            };
+
+            try
+            {
+                await _context.Database.ExecuteSqlRawAsync(query, parameters.ToArray());
+            }
+            catch
+            {
+                ModelState.AddModelError("", "ERROR");
+                return View(client);
+            }
+
+            return RedirectToAction("Index");
         }
 
         // GET: Clients/Edit/5

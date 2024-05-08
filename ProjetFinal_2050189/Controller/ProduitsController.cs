@@ -21,8 +21,14 @@ namespace ProjetFinal_2050189.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> ProduitsVendusEtNombreVendusMagasin(int magasinID)
+        public async Task<IActionResult> ProduitsVendusEtNombreVendusMagasin(int? magasinID)
         {
+
+            if (magasinID == null)
+            {
+                magasinID = 1;
+            }
+
             Magasin? magasin = await _context.Magasins.FindAsync(magasinID);
 
             if(magasin == null)

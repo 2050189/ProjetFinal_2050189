@@ -1,4 +1,4 @@
-﻿@model ProjetFinal_2050189.Models.Gamme
+﻿@model ProjetFinal_2050189.ViewModels.UploadPhotoGammeVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,60 +7,25 @@
 
 <h1>Edit</h1>
 
-<h4>Gamme</h4>
+<h4>AJOUTEZ UNE PHOTO</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="GammeId" />
+
+            <div class ="form-group">
+                <input type="hidden" asp-for="GammeID" value="@Model.GammeID" />
+                <span asp-validation-for="GammeID" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
-                <label asp-for="Nom" class="control-label"></label>
-                <input asp-for="Nom" class="form-control" />
-                <span asp-validation-for="Nom" class="text-danger"></span>
+                <label for="FormFile">Fichier image: </label>
+                <input id="FormFile" name="FormFile" type="file" accept="image/*" class="form-control-file" />
+                <span asp-validation-for="FormFile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AnneeSortie" class="control-label"></label>
-                <input asp-for="AnneeSortie" class="form-control" />
-                <span asp-validation-for="AnneeSortie" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cote" class="control-label"></label>
-                <input asp-for="Cote" class="form-control" />
-                <span asp-validation-for="Cote" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Note1" class="control-label"></label>
-                <input asp-for="Note1" class="form-control" />
-                <span asp-validation-for="Note1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Note2" class="control-label"></label>
-                <input asp-for="Note2" class="form-control" />
-                <span asp-validation-for="Note2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Note3" class="control-label"></label>
-                <input asp-for="Note3" class="form-control" />
-                <span asp-validation-for="Note3" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Couleur" class="control-label"></label>
-                <input asp-for="Couleur" class="form-control" />
-                <span asp-validation-for="Couleur" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Identifiant" class="control-label"></label>
-                <input asp-for="Identifiant" class="form-control" />
-                <span asp-validation-for="Identifiant" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" />
-                <span asp-validation-for="Photo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Téléverser" class="btn btn-primary" />
             </div>
         </form>
     </div>

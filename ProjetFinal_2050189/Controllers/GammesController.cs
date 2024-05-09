@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 using ProjetFinal_2050189.Data;
 using ProjetFinal_2050189.Models;
 using ProjetFinal_2050189.ViewModels;
@@ -90,7 +91,12 @@ namespace ProjetFinal_2050189.Controllers
             {
                 return NotFound();
             }
-            return View(gamme);
+
+            UploadPhotoGammeVM uploadPhotoGammeVM = new UploadPhotoGammeVM();
+
+            uploadPhotoGammeVM.GammeID = gamme.GammeId;
+
+            return View(uploadPhotoGammeVM);
         }
 
         // POST: Gammes/Edit/5
@@ -98,17 +104,23 @@ namespace ProjetFinal_2050189.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GammeId,Nom,AnneeSortie,Cote,Note1,Note2,Note3,Couleur,Identifiant,Photo")] Gamme gamme)
+        public async Task<IActionResult> Edit(UploadPhotoGammeVM vm)
         {
-            if (id != gamme.GammeId)
-            {
-                return NotFound();
-            }
+            Gamme gamme = await _context.Gammes.FindAsync(vm.GammeID);
+
 
             if (ModelState.IsValid)
             {
+                
                 try
                 {
+                    if (vm.FormFile != null && vm.FormFile.Length >= 0)
+                    {
+                        MemoryStream stream = new MemoryStream();
+                        await vm.FormFile.CopyToAsync(stream);
+                        byte[] photo = stream.ToArray();
+                        gamme.Photo = photo;
+                    }
                     _context.Update(gamme);
                     await _context.SaveChangesAsync();
                 }

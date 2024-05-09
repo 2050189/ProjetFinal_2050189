@@ -21,7 +21,37 @@ namespace ProjetFinal_2050189.Controllers
             _context = context;
         }
 
-        
+        public IActionResult PrixDuProduit()
+        {
+            return View(new PrixProduitVM() { Nom = "", Format = "" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PrixDuProduit(PrixProduitVM prixProduitVM)
+        {
+
+            DateTime tempsAvant = DateTime.Now;
+
+            if (_context.Produits == null || _context.Details == null)
+            {
+                return Problem("An entity set from context is null.");
+            }
+
+            Produit? produit = await _context.Produits.FirstOrDefaultAsync(x => x.Nom == prixProduitVM.Nom && x.Format == prixProduitVM.Format);
+
+            if(produit == null)
+            {
+                ModelState.AddModelError("", "Ce produit n'existe pas.");
+                return View();
+            }
+
+            List<decimal> prix = produit.Details.Select(x => x.PrixPaye).ToList();
+
+            prixProduitVM.Prix = prix;
+            DateTime tempsApres = DateTime.Now;
+            ViewData["temps"] = tempsApres.Subtract(tempsAvant).TotalMilliseconds;
+            return View(prixProduitVM);
+        }
 
         public async Task<IActionResult> VueTypeProduit()
         {

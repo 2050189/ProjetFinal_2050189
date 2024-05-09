@@ -12,11 +12,11 @@ using ProjetFinal_2050189.ViewModels;
 
 namespace ProjetFinal_2050189.Controllers
 {
-    public class ProduitsController : Controller
+    public class MagasinsController : Controller
     {
         private readonly ProjetFinal2050189Context _context;
 
-        public ProduitsController(ProjetFinal2050189Context context)
+        public MagasinsController(ProjetFinal2050189Context context)
         {
             _context = context;
         }
@@ -31,7 +31,7 @@ namespace ProjetFinal_2050189.Controllers
 
             Magasin? magasin = await _context.Magasins.FindAsync(magasinID);
 
-            if(magasin == null)
+            if (magasin == null)
             {
                 return NotFound("MAGASIN INTROUVABLE");
             }
@@ -50,87 +50,78 @@ namespace ProjetFinal_2050189.Controllers
             });
         }
 
-        public async Task<IActionResult> VueTypeProduit()
-        {
-            List<VwTypeDesProduit> vue = await _context.VwTypeDesProduits.ToListAsync();
-            return View(vue);
-        }
-
-        // GET: Produits
+        // GET: Magasins
         public async Task<IActionResult> Index()
         {
-            var projetFinal2050189Context = _context.Produits.Include(p => p.Gamme);
-            return View(await projetFinal2050189Context.ToListAsync());
+              return _context.Magasins != null ? 
+                          View(await _context.Magasins.ToListAsync()) :
+                          Problem("Entity set 'ProjetFinal2050189Context.Magasins'  is null.");
         }
 
-        // GET: Produits/Details/5
+        // GET: Magasins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Produits == null)
+            if (id == null || _context.Magasins == null)
             {
                 return NotFound();
             }
 
-            var produit = await _context.Produits
-                .Include(p => p.Gamme)
-                .FirstOrDefaultAsync(m => m.ProduitId == id);
-            if (produit == null)
+            var magasin = await _context.Magasins
+                .FirstOrDefaultAsync(m => m.MagasinId == id);
+            if (magasin == null)
             {
                 return NotFound();
             }
 
-            return View(produit);
+            return View(magasin);
         }
 
-        // GET: Produits/Create
+        // GET: Magasins/Create
         public IActionResult Create()
         {
-            ViewData["GammeId"] = new SelectList(_context.Gammes, "GammeId", "GammeId");
             return View();
         }
 
-        // POST: Produits/Create
+        // POST: Magasins/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProduitId,Nom,Format,GammeId")] Produit produit)
+        public async Task<IActionResult> Create([Bind("MagasinId,Nom,AprogrammePts")] Magasin magasin)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(produit);
+                _context.Add(magasin);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GammeId"] = new SelectList(_context.Gammes, "GammeId", "GammeId", produit.GammeId);
-            return View(produit);
+            return View(magasin);
         }
 
-        // GET: Produits/Edit/5
+        // GET: Magasins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Produits == null)
+            if (id == null || _context.Magasins == null)
             {
                 return NotFound();
             }
 
-            var produit = await _context.Produits.FindAsync(id);
-            if (produit == null)
+            var magasin = await _context.Magasins.FindAsync(id);
+            if (magasin == null)
             {
                 return NotFound();
             }
-            ViewData["GammeId"] = new SelectList(_context.Gammes, "GammeId", "GammeId", produit.GammeId);
-            return View(produit);
+            return View(magasin);
         }
 
-        // POST: Produits/Edit/5
+        // POST: Magasins/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProduitId,Nom,Format,GammeId")] Produit produit)
+        public async Task<IActionResult> Edit(int id, [Bind("MagasinId,Nom,AprogrammePts")] Magasin magasin)
         {
-            if (id != produit.ProduitId)
+            if (id != magasin.MagasinId)
             {
                 return NotFound();
             }
@@ -139,12 +130,12 @@ namespace ProjetFinal_2050189.Controllers
             {
                 try
                 {
-                    _context.Update(produit);
+                    _context.Update(magasin);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProduitExists(produit.ProduitId))
+                    if (!MagasinExists(magasin.MagasinId))
                     {
                         return NotFound();
                     }
@@ -155,51 +146,49 @@ namespace ProjetFinal_2050189.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GammeId"] = new SelectList(_context.Gammes, "GammeId", "GammeId", produit.GammeId);
-            return View(produit);
+            return View(magasin);
         }
 
-        // GET: Produits/Delete/5
+        // GET: Magasins/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Produits == null)
+            if (id == null || _context.Magasins == null)
             {
                 return NotFound();
             }
 
-            var produit = await _context.Produits
-                .Include(p => p.Gamme)
-                .FirstOrDefaultAsync(m => m.ProduitId == id);
-            if (produit == null)
+            var magasin = await _context.Magasins
+                .FirstOrDefaultAsync(m => m.MagasinId == id);
+            if (magasin == null)
             {
                 return NotFound();
             }
 
-            return View(produit);
+            return View(magasin);
         }
 
-        // POST: Produits/Delete/5
+        // POST: Magasins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Produits == null)
+            if (_context.Magasins == null)
             {
-                return Problem("Entity set 'ProjetFinal2050189Context.Produits'  is null.");
+                return Problem("Entity set 'ProjetFinal2050189Context.Magasins'  is null.");
             }
-            var produit = await _context.Produits.FindAsync(id);
-            if (produit != null)
+            var magasin = await _context.Magasins.FindAsync(id);
+            if (magasin != null)
             {
-                _context.Produits.Remove(produit);
+                _context.Magasins.Remove(magasin);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProduitExists(int id)
+        private bool MagasinExists(int id)
         {
-          return (_context.Produits?.Any(e => e.ProduitId == id)).GetValueOrDefault();
+          return (_context.Magasins?.Any(e => e.MagasinId == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ProjetFinal_2050189.Models.Magasin>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AprogrammePts)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AprogrammePts)
+            </td>
+            <td>
+                    <a asp-action="ProduitsVendusEtNombreVendusMagasin" asp-route-id="@item.MagasinId">Produit en stock</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

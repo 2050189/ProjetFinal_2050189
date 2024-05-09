@@ -12,7 +12,7 @@ namespace ProjetFinal_2050189.ViewModels
 
         public MagasinInfoVM() 
         {
-
+            
         }
     }
 }

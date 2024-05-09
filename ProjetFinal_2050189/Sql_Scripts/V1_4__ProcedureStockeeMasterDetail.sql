@@ -1,10 +1,10 @@
--- PROCÉDURE 1
+-- Vue pour stocker l'info
 
 GO
-CREATE PROCEDURE VENTE.usp_ProduitsVendusEtNombreVendusMagasin(@MagasinID int) -- JE CRÉE UNE PROCÉDURE POUR AFFICHER LES PRODUITS VENDUS ET LE NOMBRE SELON UN MAGASIN SPÉCIFIQUE
+
+CREATE VIEW VENTE.vw_MagasinVenteInfos
 AS
-BEGIN
-	SELECT m.Nom AS [Magasin], p.Nom AS [Produit], COUNT(d.ProduitID) AS [Nombre Vendu]
+	select m.MagasinID, m.Nom as [Nom magasin], p.ProduitID, p.Nom as [Nom produit], COUNT(d.ProduitID) AS [Nombre Vendu]
 	FROM VENTE.Magasin m
 	INNER JOIN VENTE.Achat a
 	ON a.MagasinID = m.MagasinID
@@ -12,7 +12,15 @@ BEGIN
 	ON d.AchatID = a.AchatID
 	INNER JOIN SOLDEJANEIRO.Produit p
 	ON p.ProduitID = d.ProduitID
-	WHERE m.MagasinID = @MagasinID
-	GROUP BY p.Nom , m.nom
+	GROUP BY m.MagasinID, m.Nom , p.ProduitID, p.Nom
+
+-- PROCÉDURE 1
+
+GO
+CREATE PROCEDURE VENTE.usp_ProduitsVendusEtNombreVendusMagasin(@MagasinID int) -- JE CRÉE UNE PROCÉDURE POUR AFFICHER LES PRODUITS VENDUS ET LE NOMBRE SELON UN MAGASIN SPÉCIFIQUE
+AS
+BEGIN
+	SELECT * FROM VENTE.vw_MagasinVenteInfos
+	WHERE MagasinID = @MagasinID
 END 
 GO

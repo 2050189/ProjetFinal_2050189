@@ -1,37 +1,34 @@
-﻿@model ProjetFinal_2050189.Models.Produit
+﻿@model IEnumerable<ProjetFinal_2050189.ViewModels.MagasinInfoVM>
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "ProduitsVendusEtNombreVendusMagasin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>ProduitsVendusEtNombreVendusMagasin</h1>
 
-<div>
-    <h4>Produit</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nom)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Format)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Format)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gamme)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gamme.GammeId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ProduitId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProduitVenduParMagasin)
+            </th>
+            <th>
+                Nombre d'articles en stock
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProduitVenduParMagasin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProduitVenduParMagasin.Count())
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

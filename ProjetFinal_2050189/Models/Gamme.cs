@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ProjetFinal_2050189.Models
 {
     [Table("Gamme", Schema = "SOLDEJANEIRO")]
+    [Index("Identifiant", Name = "UC_Gamme_Identifiant", IsUnique = true)]
     [Index("Nom", Name = "UC_Gamme_Nom", IsUnique = true)]
     public partial class Gamme
     {
@@ -30,6 +31,8 @@ namespace ProjetFinal_2050189.Models
         public string Note3 { get; set; } = null!;
         [StringLength(25)]
         public string Couleur { get; set; } = null!;
+        public Guid Identifiant { get; set; }
+        public byte[]? Photo { get; set; }
 
         [InverseProperty("Gamme")]
         public virtual ICollection<Produit> Produits { get; set; }

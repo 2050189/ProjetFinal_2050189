@@ -71,6 +71,11 @@ namespace ProjetFinal_2050189.Data
                     .HasConstraintName("FK_Details_ProduitID");
             });
 
+            modelBuilder.Entity<Gamme>(entity =>
+            {
+                entity.Property(e => e.Identifiant).HasDefaultValueSql("(newid())");
+            });
+
             modelBuilder.Entity<Hydratant>(entity =>
             {
                 entity.HasOne(d => d.Produit)

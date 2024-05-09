@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ProjetFinal_2050189.ViewModels.GammePhotoVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Gamme.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gamme.AnneeSortie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gamme.Cote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gamme.Note1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gamme.Note2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gamme.Note3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gamme.Couleur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gamme.Photo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gamme.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gamme.AnneeSortie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gamme.Cote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gamme.Note1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gamme.Note2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gamme.Note3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gamme.Couleur)
+                </td>
+                <td>
+                    <img style="width:150px; height:150px" src="@Html.DisplayFor(modelItem => item.ImgUrl)">
+
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Gamme.GammeId">Ajout/Suppression de photo</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

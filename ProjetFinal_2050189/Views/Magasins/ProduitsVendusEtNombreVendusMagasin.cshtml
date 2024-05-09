@@ -1,35 +1,38 @@
-﻿@model IEnumerable<ProjetFinal_2050189.ViewModels.MagasinInfoVM>
+﻿@model ProjetFinal_2050189.ViewModels.MagasinInfoVM
 
 @{
     ViewData["Title"] = "ProduitsVendusEtNombreVendusMagasin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ProduitsVendusEtNombreVendusMagasin</h1>
+<h1>Produits Vendus et le nombre: @Model.Magasin.Nom </h1>
+
+<br />
+
+<a asp-action="Index">Back to List</a>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProduitVenduParMagasin)
+                Produit vendu
             </th>
             <th>
-                Nombre d'articles en stock
+                Nombre vendu
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Infos)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProduitVenduParMagasin)
+                    @Html.DisplayFor(modelItem => item.NomProduit)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProduitVenduParMagasin.Count())
+                    @Html.DisplayFor(modelItem => item.NombreVendu)
                 </td>
             </tr>
         }
     </tbody>
 </table>
-

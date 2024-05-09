@@ -28,6 +28,7 @@ namespace ProjetFinal_2050189.Data
         public virtual DbSet<Produit> Produits { get; set; } = null!;
         public virtual DbSet<Savon> Savons { get; set; } = null!;
         public virtual DbSet<Vaporisateur> Vaporisateurs { get; set; } = null!;
+        public virtual DbSet<VwMagasinVenteInfo> VwMagasinVenteInfos { get; set; } = null!;
         public virtual DbSet<VwTypeDesProduit> VwTypeDesProduits { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -100,6 +101,11 @@ namespace ProjetFinal_2050189.Data
                     .WithMany(p => p.Vaporisateurs)
                     .HasForeignKey(d => d.ProduitId)
                     .HasConstraintName("FK_Vaporisateur_ProduitID");
+            });
+
+            modelBuilder.Entity<VwMagasinVenteInfo>(entity =>
+            {
+                entity.ToView("vw_MagasinVenteInfos", "VENTE");
             });
 
             modelBuilder.Entity<VwTypeDesProduit>(entity =>

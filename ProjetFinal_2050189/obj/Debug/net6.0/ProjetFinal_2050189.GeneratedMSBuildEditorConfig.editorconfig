@@ -44,10 +44,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFnYXNpbnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/2050189/Desktop/ProjetFinal_2050189/ProjetFinal_2050189/Views/Magasins/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFnYXNpbnNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/2050189/Desktop/ProjetFinal_2050189/ProjetFinal_2050189/Views/Magasins/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFnYXNpbnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -66,10 +62,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/2050189/Desktop/ProjetFinal_2050189/ProjetFinal_2050189/Views/Produits/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVpdHNcRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/2050189/Desktop/ProjetFinal_2050189/ProjetFinal_2050189/Views/Produits/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVpdHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/2050189/Desktop/ProjetFinal_2050189/ProjetFinal_2050189/Views/Produits/Edit.cshtml]

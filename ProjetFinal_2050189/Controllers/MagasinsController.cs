@@ -21,33 +21,31 @@ namespace ProjetFinal_2050189.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> ProduitsVendusEtNombreVendusMagasin(int? magasinID)
+        public async Task<IActionResult> ProduitsVendusEtNombreVendusMagasin(int id)
         {
-
-            if (magasinID == null)
-            {
-                magasinID = 1;
-            }
-
-            Magasin? magasin = await _context.Magasins.FindAsync(magasinID);
-
-            if (magasin == null)
-            {
-                return NotFound("MAGASIN INTROUVABLE");
-            }
-
+            Magasin? magasin = await _context.Magasins.FindAsync(id);
             string query = "EXEC VENTE.usp_ProduitsVendusEtNombreVendusMagasin @MagasinID";
 
             List<SqlParameter> param = new List<SqlParameter>()
             {
-                new SqlParameter{ParameterName = "@MagasinID", Value = magasin.MagasinId }
+                new SqlParameter{ParameterName = "@MagasinID", Value = id }
             };
+
+            List<VwMagasinVenteInfo> infos = await _context.VwMagasinVenteInfos.FromSqlRaw(query, param.ToArray()).ToListAsync();
+
+            if (infos == null)
+            {
+                return NotFound("MAGASIN INTROUVABLE");
+            }
+
+
 
             return View("ProduitsVendusEtNombreVendusMagasin", new MagasinInfoVM()
             {
                 Magasin = magasin,
-                ProduitVenduParMagasin = (IEnumerable<Produit>)await _context.Magasins.FromSqlRaw(query, param.ToArray()).ToListAsync()
-            });
+                Infos = infos
+
+            }) ;
         }
 
         // GET: Magasins

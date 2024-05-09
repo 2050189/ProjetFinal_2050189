@@ -5,44 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>ACCUEIL</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Format)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gamme)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Format)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gamme.GammeId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProduitId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProduitId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProduitId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<br />
+
+<h2>Les pages des migrations sont en couleurs.</h2>

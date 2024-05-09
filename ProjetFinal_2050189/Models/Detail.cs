@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ProjetFinal_2050189.Models
 {
     [Table("Details", Schema = "VENTE")]
+    [Index("PrixPaye", Name = "IX_Details_PrixPaye")]
     public partial class Detail
     {
         [Key]
